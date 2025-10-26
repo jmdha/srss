@@ -40,19 +40,6 @@ double dt_get(void) {
 	return v;
 }
 
-//void render_line(i32 x0, i32 y0, i32 x1, i32 y1, const u8 color[4]) {
-//	const float  h = sqrt(pow(x1 - x0, 2) + pow(y1 - y0, 2));
-//	const float  mx = 1 / h * (x1 - x0);
-//	const float  my = 1 / h * (y1 - y0);
-//	for (size_t i = 0; i < h; i++) {
-//		i32 x = x0 + i * mx;
-//		i32 y = y0 + i * my;
-//		if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT) continue;
-//		i32 c = y * (4 * WIDTH) + 4 * x;
-//		memcpy(&BUF[c], color, 4 * sizeof(u8));
-//	}
-//}
-
 void render_rect(i32 x, i32 y, i32 w, i32 h, const u8 color[4]) {
 	for(i32 _x = x; _x < w + x; _x++) {
 		for(i32 _y = y; _y < h + y; _y++) {
@@ -61,29 +48,6 @@ void render_rect(i32 x, i32 y, i32 w, i32 h, const u8 color[4]) {
 		}
 	}
 }
-
-//void render_grid(const u8 color[4]) {
-//	for (size_t x = 1; x < GWIDTH; x++)
-//		render_line(x * CWIDTH, 0, x * CHEIGHT, HEIGHT - 1, WHITE);
-//	for (size_t y = 1; y < GHEIGHT; y++)
-//		render_line(0, y * CWIDTH, WIDTH - 1, y * CHEIGHT, WHITE);
-//}
-//
-//void render_vel(const u8 color[4]) {
-//	const float csize = min(CWIDTH, CHEIGHT);
-//	const float chalf = csize / 2;
-//	for (size_t x = 1; x < GWIDTH - 1; x++) {
-//		for (size_t y = 1; y < GHEIGHT - 1; y++) {
-//			float vx = clamp(VX[y * GWIDTH + x], -chalf, chalf);
-//			float vy = clamp(VY[y * GWIDTH + x], -chalf, chalf);
-//			i32 x0 = (x + 0.5f) * CWIDTH;
-//			i32 y0 = (y + 0.5f) * CHEIGHT;
-//			i32 x1 = x0 + vx;
-//			i32 y1 = y0 + vy;
-//			render_line(x0, y0, x1, y1, color);
-//		}
-//	}
-//}
 
 void render_smoke() {
 	for (size_t x = 1; x < GWIDTH - 1; x++) {
@@ -195,10 +159,7 @@ int main(void) {
 		}
 
 		render_rect(0, 0, WIDTH, HEIGHT, BLACK);
-		//render_grid(WHITE);
 		render_smoke();
-		//render_vel(WHITE);
-		//render_vel_split(WHITE);
 		RGFW_window_blitSurface(WIN, SURFACE);
 
 		advect(dt);
