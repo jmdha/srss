@@ -5,10 +5,10 @@
 #define RGFW_IMPLEMENTATION
 #include "RGFW.h"
 
-#define WIDTH   512
-#define HEIGHT  512
-#define GWIDTH  (1024 / 8)
-#define GHEIGHT (1024 / 8)
+#define WIDTH   1024
+#define HEIGHT  1024
+#define GWIDTH  128
+#define GHEIGHT 128
 #define CWIDTH  (WIDTH / GWIDTH)
 #define CHEIGHT (HEIGHT / GHEIGHT)
 #define max(a, b)      ((a) > (b) ? (a) : (b))
@@ -149,7 +149,7 @@ void project_cell(double dt, size_t x, size_t y) {
 	float v      = vup - vdown - vleft + vright;
 	float e      = eup + edown + eleft + eright;
 	if (SOLID[y * GWIDTH + x] || e == 0) return;
-	float m      = -v / e * 1.9;
+	float m      = -v / e * 1.5;
 	VY[(y + 1) * GWIDTH + (x + 0)] += m * eup;
 	VY[(y + 0) * GWIDTH + (x + 0)] -= m * edown;
 	VX[(y + 0) * GWIDTH + (x + 0)] -= m * eleft;
@@ -157,7 +157,7 @@ void project_cell(double dt, size_t x, size_t y) {
 }
 
 void project(double dt) {
-	for (size_t i = 0; i < 100; i++)
+	for (size_t i = 0; i < 50; i++)
 		for (size_t x = 1; x < GWIDTH - 1; x++)
 			for (size_t y = 1; y < GHEIGHT - 1; y++)
 				project_cell(dt, x, y);
